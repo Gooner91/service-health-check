@@ -33,18 +33,18 @@ class ServiceCreate(SQLModel):
   @field_validator("status", mode="before")
   @classmethod
   def _accept_status_name(cls, v):
-    if isinstance(v,str):
+    if isinstance(v, str):
       return ServiceStatus[v]
     return v
 
-class ServiceRecord(SQLModel):
+class ServiceRead(SQLModel):
   id: int
   name: str
-  description: str
+  description: Optional[str] = None
   url: str
   status: ServiceStatus
-  response_time: float
-  last_checked_at: datetime
+  response_time: Optional[float] = None
+  last_checked_at: Optional[datetime] = None
   created_at: datetime
   updated_at: datetime
 
@@ -56,7 +56,7 @@ class ServiceUpdate(SQLModel):
   name: Optional[str] = None
   description: Optional[str] = None
   url: Optional[str] = None
-  status: ServiceStatus
+  status: Optional[ServiceStatus] = None
   @field_validator("status", mode="before")
   @classmethod
   def _accept_status_name(cls, v):
